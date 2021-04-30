@@ -31,8 +31,6 @@ const Lottery = () => {
 
     const tr1 = await coinContract.approve(contract.address, ethToWei("20"));
 
-    console.log("tr1", tr1);
-
     setState({
       ...state,
       action: "Waiting for approval transaction!",
@@ -46,8 +44,6 @@ const Lottery = () => {
     });
 
     const tr2 = await contract.enter();
-
-    console.log("tr2", tr2);
 
     setState({
       ...state,
@@ -67,6 +63,7 @@ const Lottery = () => {
 
     setState({
       ...state,
+      action: "",
       inProgress: false,
     });
   };

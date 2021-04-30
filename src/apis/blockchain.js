@@ -9,6 +9,10 @@ export const getInfuraProvider = (apiKey) => {
   );
 };
 
+export const getDefaultProvider = () => {
+  return ethers.getDefaultProvider(ethers.providers.getNetwork("kovan"));
+};
+
 export const createWallet = (privateKey, provider) => {
   return new ethers.Wallet(privateKey, provider);
 };

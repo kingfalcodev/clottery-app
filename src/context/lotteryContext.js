@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import {
-  getInfuraProvider,
+  getDefaultProvider,
   createWallet,
   createRandomWallet,
   createContractFromAddress,
@@ -9,10 +9,8 @@ import {
 import { abi } from "../abis/Lottery.json";
 import { abi as FLAbi } from "../abis/Falco.json";
 import { LOTTERY_ADDRESS, FALCO_ADDRESS } from "../constants/kovan.json";
-import { INFURA_KOVAN_PROJECT_ID } from "../../apiKeys";
-import { PRIVATE_KEY } from "../../ethPrivateAccounts";
 import { storeData, retrieveData } from "../utils/asyncStorage";
-import { WALLET_STORE_KEY, WALLET_STORE_PASSWORD } from "../../secret";
+import { WALLET_STORE_KEY } from "../../secret";
 
 const LotteryContext = createContext();
 
@@ -71,7 +69,7 @@ const LotteryProvider = ({ children }) => {
   useEffect(() => {
     const getProvider = async () => {
       try {
-        const provider = getInfuraProvider(INFURA_KOVAN_PROJECT_ID);
+        const provider = getDefaultProvider();
         let wallet;
 
         const privateKey = await retrieveData(WALLET_STORE_KEY);
