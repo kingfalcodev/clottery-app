@@ -4,9 +4,15 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start"
+    "start": "react-native start",
+    "compile": "hardhat compile && cp artifacts/src/contracts/**/*.json src/abis/",
+    "deploy:falco": "hardhat run --network kovan scripts/falco.js",
+    "deploy:lottery": "hardhat run --network kovan scripts/lottery.js"
   },
   "dependencies": {
+    "@ethersproject/shims": "^5.1.1",
+    "@react-native-async-storage/async-storage": "^1.15.4",
+    "ethers": "^5.0.0",
     "expo": "~41.0.1",
     "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "~1.0.4",
@@ -15,13 +21,21 @@
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-get-random-values": "^1.7.0",
     "react-native-reanimated": "~2.1.0",
     "react-native-screens": "~3.0.0",
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "@nomiclabs/hardhat-ethers": "^2.0.0",
+    "@nomiclabs/hardhat-etherscan": "^2.1.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.0",
+    "@openzeppelin/contracts": "^3.3.0",
+    "chai": "^4.2.0",
+    "ethereum-waffle": "^3.0.0",
+    "hardhat": "^2.2.1"
   },
   "private": true
 }
