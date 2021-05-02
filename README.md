@@ -29,7 +29,9 @@ Accounts can be encrypted using `wallet.encrypt` and later built back using `Wal
 
 However, this turned out to be extremely slow in react native (takes about 3min per function). The speed reduction comes from the security of the algorithm, which can be reduced but of cause then security will suffer.
 
-Better solution would be to use a server or a serverless function (e.g. Cloud Function) to encrypt and decrypt the private key.
+Better solution would be to use Keychain/Keystore to store private keys. `react-native-keychain` module can be used to achieve that.
+
+For more info see: `src/utils/keychain.js`
 
 ## Provider
 
@@ -38,3 +40,28 @@ Since extensions such as MetaMask can't be used on the phone, the provider has t
 `ethers` also provides `getDefaultProvider` function that returns a provider which will use INFURA and will fall back to Etherscan if INFURA is down. It is recommended to use `getDefaultProvider`.
 
 For more info see: https://docs.ethers.io/v5/api/providers/
+
+## Running on XCode
+
+### `'atomic_notify_one<unsigned long>' is unavailable` Error
+
+There seems to be an issue with Flipper (debugging tool for RN) in XCode 12. Since React Native gives a pretty good console log out puts its not a big deal to turn Flipper off. This can be done in `ios/Podfile` by commenting out the `use_flipper!(...)` line:
+
+```ruby
+if !ENV['CI']
+    # use_flipper!({ 'Flipper' => '0.80.0' }) <-- this line
+    post_install do |installer|
+        flipper_post_install(installer)
+    end
+end
+```
+
+### Can't find node
+
+If you are getting `Can't find node` error, it means that you are using node version manager (e.g. nodenv) and default node path (`/usr/local/bin/node`) does not work.
+
+The simplest solution is to just create a simlink to the default node path
+
+```sh
+ln -s $(which node) /usr/local/bin/node
+```

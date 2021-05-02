@@ -10,6 +10,7 @@ import { abi } from "../abis/Lottery.json";
 import { abi as FLAbi } from "../abis/Falco.json";
 import { LOTTERY_ADDRESS, FALCO_ADDRESS } from "../constants/kovan.json";
 import { storeData, retrieveData } from "../utils/asyncStorage";
+import { setPrivateKey, getPrivateKey } from "../utils/keychain";
 import { WALLET_STORE_KEY } from "../../secret";
 
 const LotteryContext = createContext();
@@ -72,24 +73,14 @@ const LotteryProvider = ({ children }) => {
         const provider = getDefaultProvider();
         let wallet;
 
-        const privateKey = await retrieveData(WALLET_STORE_KEY);
+        const privateKey = await getPrivateKey();
 
         if (privateKey) {
-          // The data store should be encrypted and retrieved like so (Note: speed might suffer with encryption):
-          // wallet = fromEncryptedJsonSync(
-          //   JSON.parse(walletJsonS),
-          //   WALLET_STORE_PASSWORD
-          // );
           wallet = createWallet(privateKey, provider);
         } else {
           wallet = createRandomWallet();
-          // This is bad, should encrypt the data (Note: speed might suffer with encryption)
-          // const walletJson = await wallet.encrypt(WALLET_STORE_PASSWORD);
-          await storeData(WALLET_STORE_KEY, wallet.privateKey);
+          await setPrivateKey(wallet.privateKey);
         }
-
-        // Provider must be added after if encrypted
-        // wallet = wallet.connect(provider);
 
         const walletBalance = weiToEth(await wallet.getBalance()).toString();
 
