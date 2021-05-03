@@ -9,9 +9,7 @@ import {
 import { abi } from "../abis/Lottery.json";
 import { abi as FLAbi } from "../abis/Falco.json";
 import { LOTTERY_ADDRESS, FALCO_ADDRESS } from "../constants/kovan.json";
-import { storeData, retrieveData } from "../utils/asyncStorage";
 import { setPrivateKey, getPrivateKey } from "../utils/keychain";
-import { WALLET_STORE_KEY } from "../../secret";
 
 const LotteryContext = createContext();
 
